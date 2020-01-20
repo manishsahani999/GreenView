@@ -104,7 +104,7 @@ class Dashboard extends React.Component {
                     <div className="column">
                         <div className="" style={{ width: '100%', height: '100vh' }}>
                             <MapContainer
-                                googleMapURL='https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC-aSfP5CIKSY1j83M10-BbDUpnDs1oU8I'
+                                googleMapURL='https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyCFmHR_8osaHWKMr7_8NAySPUQSWLutFeE'
                                 loadingElement={<div style={{ height: '100%' }} />}
                                 containerElement={<div style={{ height: '100%' }} />}
                                 mapElement={<div style={{ height: '100%' }} />}
