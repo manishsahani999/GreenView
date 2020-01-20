@@ -59,6 +59,7 @@ class Dashboard extends React.Component {
         data.append('lat', this.props.coords.latitude);
         data.append('lng', this.props.coords.longitude);
 
+        alert(this.fileInput.current.files[0].name);
 
         this.props.uploadPlantImage(data)
         // this.props.getAllPlantImages();
