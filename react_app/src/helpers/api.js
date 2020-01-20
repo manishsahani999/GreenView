@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://api.tuesday.wtf/api',
+    baseURL: 'https://api.tuesday.wtf/api',
 })
 
 let AUTH_TOKEN = localStorage.getItem('token');
