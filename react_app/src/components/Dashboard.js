@@ -18,6 +18,7 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
+            filename: "",
             loadingBarProgress: 0,
             geolocation: false,
             coords: { latitude: 28.629401599999998, longitude: 77.160448 }
@@ -42,13 +43,13 @@ class Dashboard extends React.Component {
             navigator.geolocation.getCurrentPosition(function(position){
                 updateLocation(position);
            });
-        } else {
-            const x = "Geolocation is not supported by this browser.";
-            console.log(x);
         }
     }
 
-    handleChange = e => this.setState({ [e.target.name]: e.target.value });
+    handleChange = e => {
+        const name = this.fileInput.current.files[0].name;
+        this.setState({filename: name})
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -96,13 +97,22 @@ class Dashboard extends React.Component {
                             <div className="field">
                                 <div className="file has-name is-boxed is-fullwidth" style={{ marginTop: '4rem' }}>
                                     <label className="file-label">
-                                        <input ref={this.fileInput} className="file-input" type="file" name="plantimg" />
+                                        <input ref={this.fileInput} onChange={this.handleChange} className="file-input" type="file" name="plantimg" />
                                         <span className="file-cta">
                                             <span className="file-icon">
                                                 <i className="fas fa-upload"></i>
                                             </span>
                                             <span className="file-label">
-                                                Upload a Picture
+                                                {!this.state.filename && (
+                                                    <>
+                                                        Upload a Picture
+                                                    </>
+                                                )}
+                                                {this.state.filename && (
+                                                    <>
+                                                        {this.state.filename}
+                                                    </>
+                                                )}
                                     </span>
                                         </span>
                                         <span className="file-name">
