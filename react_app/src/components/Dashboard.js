@@ -35,20 +35,20 @@ class Dashboard extends React.Component {
     componentDidMount() {
         if (this.props.message.val) console.log('clear')
 
-        const updateLocation = ({coords}) => this.setState({
-            geolocation:true, coords: coords
-        }) 
+        const updateLocation = ({ coords }) => this.setState({
+            geolocation: true, coords: coords
+        })
         console.log(navigator);
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position){
+            navigator.geolocation.getCurrentPosition(function (position) {
                 updateLocation(position);
-           });
+            });
         }
     }
 
     handleChange = e => {
         const name = this.fileInput.current.files[0].name;
-        this.setState({filename: name})
+        this.setState({ filename: name })
     }
 
     handleSubmit = (e) => {
@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
 
         if (!this.state.geolocation) return <GeolocationNotEnabled {...this.props} />
         console.log(this.state);
-        const {coords} = this.state;
+        const { coords } = this.state;
 
         let { user, markers } = this.props;
 
@@ -114,7 +114,7 @@ class Dashboard extends React.Component {
                                                         {this.state.filename}
                                                     </>
                                                 )}
-                                    </span>
+                                            </span>
                                         </span>
                                         <span className="file-name">
                                             {/* {this.fileInput.current.files[0] && (this.fileInput.current.files[0].name)} */}
@@ -166,6 +166,7 @@ const GeolocationNotEnabled = (props) => (
 )
 
 
+
 const mapStateToProps = (state) => ({
     auth: state.authentication,
     user: state.user,
@@ -192,11 +193,16 @@ const withGeoLocation = geolocated({
 const MarkerList = ({ markers }) => {
 
 
-    if (markers) return markers.map(item => <Marker
-        label={item.disease_name}
-        key={item.id + Math.floor((Math.random() * 100000) + 1)}
-        position={{ lat: parseFloat(item.lat), lng: parseFloat(item.lng) }
-        } />)
+    if (markers) return markers.map(item => <button key={item.id + Math.floor((Math.random() * 100000) + 1)} onClick={alert("helo")}>
+        <Marker
+            label={item.disease_name}
+            icon={{
+                url: require('../img/red.png'),
+                scaledSize: { width: 62, height: 62 }
+            }}
+            position={{ lat: parseFloat(item.lat), lng: parseFloat(item.lng) }
+            } />
+    </button>)
     else return <div />
 }
 
@@ -255,9 +261,10 @@ const MapContainer = withScriptjs(withGoogleMap((props) => <GoogleMap
     <MarkerList markers={props.markers} />
     <Marker label=""
         icon={{
-            url: 'https://cdn.pixabay.com/photo/2014/04/03/10/03/google-309740_960_720.png',
-            scaledSize: { width: 32, height: 62 }
+            url: require('../img/pin-f.png'),
+            scaledSize: { width: 62, height: 62 }
         }} position={{ lat: props.coords.latitude, lng: props.coords.longitude }} />
+
 </GoogleMap>));
 
 export { withGeoLocation as Dashboard }
