@@ -33,18 +33,20 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         if (this.props.message.val) console.log('clear')
+
+        const updateLocation = ({coords}) => this.setState({
+            geolocation:true, coords: coords
+        }) 
         
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.updateLocation);
+            navigator.geolocation.getCurrentPosition(function(position){
+                updateLocation(position);
+           });
         } else {
             const x = "Geolocation is not supported by this browser.";
             console.log(x);
         }
     }
-
-    updateLocation = ({coords}) => this.setState({
-        geolocation:true, coords: coords
-    }) 
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
