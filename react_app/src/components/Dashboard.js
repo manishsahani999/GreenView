@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
 
     render() {
 
-        if (!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled) return <GeolocationNotEnabled {...this.props} />
+        // if (!this.props.isGeolocationAvailable) return <GeolocationNotEnabled {...this.props} />
 
         let coords = { latitude: 28.629401599999998, longitude: 77.160448 }
         let { user, markers } = this.props
