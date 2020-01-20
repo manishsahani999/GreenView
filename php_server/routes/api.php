@@ -18,7 +18,8 @@ Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
 Route::post('me', 'AuthController@me');
 
-
 Route::get('image', 'PlantImageController@index');
 Route::get('image/analyse', 'PlantImageController@show');
 Route::post('image', 'PlantImageController@store');
+
+Route::get('report', 'ReportController@index');

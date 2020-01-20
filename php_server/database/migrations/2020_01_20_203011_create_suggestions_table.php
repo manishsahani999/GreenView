@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlantImagesTable extends Migration
+class CreateSuggestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreatePlantImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('plant_images', function (Blueprint $table) {
+        Schema::create('suggestions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('disease_name')->nullable();
+            $table->string('crop_name')->nullable();
+            $table->longText('suggestion')->nullable();
             $table->integer('user_id');
-            $table->text('crop_name')->nullable();
-            $table->text('disease_name')->nullable();
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
-            $table->boolean('diseased')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreatePlantImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plant_images');
+        Schema::dropIfExists('suggestions');
     }
 }
