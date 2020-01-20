@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
         const updateLocation = ({coords}) => this.setState({
             geolocation:true, coords: coords
         }) 
-        
+        console.log(navigator);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position){
                 updateLocation(position);
