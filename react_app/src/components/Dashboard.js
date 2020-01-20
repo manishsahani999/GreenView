@@ -18,8 +18,11 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
-            loadingBarProgress: 0
+            loadingBarProgress: 0,
+            geolocation: false,
+            coords: { latitude: 28.629401599999998, longitude: 77.160448 }
         }
+
         this.fileInput = React.createRef();
     }
 
@@ -30,7 +33,18 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         if (this.props.message.val) console.log('clear')
+        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.updateLocation);
+        } else {
+            const x = "Geolocation is not supported by this browser.";
+            console.log(x);
+        }
     }
+
+    updateLocation = ({coords}) => this.setState({
+        geolocation:true, coords: coords
+    }) 
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
@@ -49,11 +63,11 @@ class Dashboard extends React.Component {
 
     render() {
 
-        // if (!this.props.isGeolocationAvailable) return <GeolocationNotEnabled {...this.props} />
+        if (!this.state.geolocation) return <GeolocationNotEnabled {...this.props} />
+        console.log(this.state);
+        const {coords} = this.state;
 
-        let coords = { latitude: 28.629401599999998, longitude: 77.160448 }
-        let { user, markers } = this.props
-        if (this.props.coords) coords = this.props.coords
+        let { user, markers } = this.props;
 
         return (
             <div>
