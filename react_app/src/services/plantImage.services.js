@@ -4,7 +4,7 @@ const uploadPlantImage = data => api.post('/image', data, {
     headers: {
         'content-type': 'multipart/form-data'
     }
-}).then(handle);
+}).then(handle).then(alert("done"));
 
 const getAllPlantImages = () => api.get('/image').then(handle);
 
