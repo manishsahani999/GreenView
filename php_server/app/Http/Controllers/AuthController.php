@@ -33,7 +33,8 @@ class AuthController extends Controller
 
 
         if ($token = $this->guard()->attempt($credentials)) {
-            return $this->respondWithToken($token);
+            $roles = $this->guard()->user()->getRoles();
+            return $this->respondWithToken($token, $roles);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
@@ -78,10 +79,11 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $roles)
     {
         return response()->json([
             'token' => $token,
+            'roles' => $roles,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->factory()->getTTL() * 60
         ]);

@@ -1,7 +1,8 @@
 import { userConstants } from '../actions/constants';
 
 let jwt = localStorage.getItem('token');
-const initialState = (jwt)? { loggedIn: true } : { loggedIn: false, };
+let role = localStorage.getItem('role');
+const initialState = (jwt)? { loggedIn: true, role: role } : { loggedIn: false, role: "" };
 
 export function authentication(state = initialState, action) {
   switch (action.type) {
@@ -10,6 +11,8 @@ export function authentication(state = initialState, action) {
         loggedIn: true,
       };
     case userConstants.LOGIN_SUCCESS:
+      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('role', action.payload.roles[0])
       return {
         loggedIn: true,
       };

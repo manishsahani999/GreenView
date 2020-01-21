@@ -5,10 +5,11 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from './helpers'
-import { Login, Home, Dashboard } from './components'
+import { Login, Home, Dashboard, Report } from './components'
 
 import './App.sass';
 import LoadingBar from 'react-redux-loading-bar'
+import { Expert } from './components/Expert';
 
 class App extends React.Component {
 
@@ -21,14 +22,25 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/"><Home {...this.props} /></Route>
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            
+            <FarmerRoute path="/dashboard"  component={Dashboard} />
+            <FarmerRoute path="/report" component={Report} />
+            <ExpertRoute path="/expert" component={Expert} />
           </Switch>
         </Router>
         
       </div>
     )
   }
+}
+
+const FarmerRoute = ({component: Component, path:path, ...rest}) => {
+  if (localStorage.getItem('role') === 'user') return <PrivateRoute path={path} component={Component} />
+  else return <Redirect to='/login' />
+}
+
+const ExpertRoute = ({component: Component, auth: auth, path:path, ...rest}) => {
+  if (localStorage.getItem('role') === 'expert') return <PrivateRoute path={path} component={Component} />
+  else return <Redirect to='/login'  />
 }
 
 

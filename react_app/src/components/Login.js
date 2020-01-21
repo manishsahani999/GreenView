@@ -3,31 +3,36 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {userActions} from '../actions';
+import LoaderWrapper from './Loader';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: 'manishsahani@gmail.com',
-            password: 'manish',
+            email: 'user@app.com',
+            password: 'password'
         }
     }
+    
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Login form Submitted with', this.state.email);
         this.props.login(this.state);
     }
 
 
     render() {
 
-        console.log(this.props)
+        // if (localStorage && localStorage.getItem('token')) return <Redirect to='/dashboard' />
+
+        const {auth} = this.props;
+
+        if (localStorage && localStorage.getItem('token') && localStorage.getItem('role') === 'user') return <Redirect to='/dashboard' />
         
-        if (localStorage && localStorage.getItem('token')) return <Redirect to='/dashboard' />
+        if (localStorage && localStorage.getItem('token') && localStorage.getItem('role') === 'expert') return <Redirect to='/expert' />
 
         return (
             <div>
@@ -83,7 +88,7 @@ class Login extends React.Component {
 
 
 
-const mapStateToProps = (state) => ({ auth: state });
+const mapStateToProps = (state) => ({ auth: state.authentication });
 const mapDispatchToProps = { login: userActions.login };
 const connected = connect(mapStateToProps, mapDispatchToProps)(Login);
 

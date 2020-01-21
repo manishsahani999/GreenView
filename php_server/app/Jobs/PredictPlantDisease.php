@@ -36,10 +36,7 @@ class PredictPlantDisease implements ShouldQueue
 
         $client = new \GuzzleHttp\Client();
 
-        \Log::info($this->plantImage);
-
-
-        $res = $client->post('http://ec2-3-92-127-55.compute-1.amazonaws.com:9000/predict', [
+        $res = $client->post('http://localhost:8000/predict', [
             'multipart' => [
                 [
                     'name'     => 'plant_image',
@@ -48,15 +45,26 @@ class PredictPlantDisease implements ShouldQueue
             ],
         ]);
 
-        // \Log::info($baseimage); 
-
 
         
         $data = json_decode($res->getBody(), true);
 
-        // $this->plantImage->update([
-        //     'disease_name' => $data['data']
-        // ]);
-        \Log::info($data); 
+        
+
+        if (isset($data['data'])) {
+            $x = explode("___", $data['data']);
+            if (isset($x[1]) && $x[1] == 'healthy') {
+                \Log::info("Healthy");
+            } 
+            else {
+                $this->plantImage->update([
+                    'disease_name' => $x[0],
+                    'crop_name' => $x[1],
+                    'diseased' => true
+                ]);
+            } 
+        }
+
+        // \Log::info($x); 
     }
 }

@@ -18,7 +18,8 @@ class CreateSuggestionsTable extends Migration
             $table->string('disease_name')->nullable();
             $table->string('crop_name')->nullable();
             $table->longText('suggestion')->nullable();
-            $table->integer('user_id');
+            $table->enum('status', ['solved', 'pending']);
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

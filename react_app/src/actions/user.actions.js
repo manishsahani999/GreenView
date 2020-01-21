@@ -5,7 +5,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 const login = (username, password) => {
 
     const request = user => ({ type: userConstants.LOGIN_REQUEST, user });
-    const success = user => ({ type: userConstants.LOGIN_SUCCESS, user });
+    const success = user => ({ type: userConstants.LOGIN_SUCCESS, payload: user });
     const failure = err => ({ type: userConstants.LOGIN_FAILURE, err });
 
     return dispatch => {

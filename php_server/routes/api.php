@@ -18,8 +18,16 @@ Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
 Route::post('me', 'AuthController@me');
 
-Route::get('image', 'PlantImageController@index');
-Route::get('image/analyse', 'PlantImageController@show');
-Route::post('image', 'PlantImageController@store');
+Route::group(['prefix' => 'expert', 'middleware' => 'role:expert|admin'], function (){
+    Route::get('suggestion', 'SuggestionController@index');
+    Route::post('suggestion', 'SuggestionController@update');
+});
 
-Route::get('report', 'ReportController@index');
+Route::group(['prefix' => 'farmer', 'middleware' => 'role:user|admin'], function (){
+    Route::get('image', 'PlantImageController@index');
+    Route::post('image', 'PlantImageController@store');
+
+    Route::get('image/analyse', 'PlantImageController@show');
+    
+    Route::get('report', 'ReportController@index');
+});

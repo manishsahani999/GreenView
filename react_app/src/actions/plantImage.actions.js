@@ -4,8 +4,8 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const uploadPlantImage = (data) => {
     return dispatch => {
+        dispatch(showLoading())
         plantImageService.uploadPlantImage(data).then(data => {
-            dispatch(showLoading())
             dispatch({type: plantImageConstants.UPLOAD_PLANT_IMAGE, payload: data})
             setTimeout(() => {
                 dispatch(hideLoading());

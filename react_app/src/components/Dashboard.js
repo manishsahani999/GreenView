@@ -10,40 +10,44 @@ import {
 } from 'react-google-maps';
 
 
-import Demo from './Location'
 import { userActions, plantImageActions } from '../actions';
+import Loader from './Loader';
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            loading: true,
             filename: "",
             loadingBarProgress: 0,
             geolocation: false,
-            coords: { latitude: 28.629401599999998, longitude: 77.160448 }
+            coords: {}
         }
 
         this.fileInput = React.createRef();
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.me();
         this.props.getAllPlantImages();
-    }
-
-    componentDidMount() {
+        
         if (this.props.message.val) console.log('clear')
 
         const updateLocation = ({ coords }) => this.setState({
             geolocation: true, coords: coords
         })
-        console.log(navigator);
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 updateLocation(position);
             });
         }
+        else console.log("geo not available")
+
+        setTimeout(() => {
+            this.setState({loading: false})
+        }, 2000);
     }
 
     handleChange = e => {
@@ -59,13 +63,13 @@ class Dashboard extends React.Component {
         data.append('lat', this.props.coords.latitude);
         data.append('lng', this.props.coords.longitude);
 
-        alert(this.fileInput.current.files[0].name);
-
         this.props.uploadPlantImage(data)
         // this.props.getAllPlantImages();
     }
 
     render() {
+
+        if(this.state.loading) return <Loader />
 
         if (!this.state.geolocation) return <GeolocationNotEnabled {...this.props} />
         console.log(this.state);
@@ -85,7 +89,7 @@ class Dashboard extends React.Component {
                         <h1 className="title is-size-1">
                             <Link className="has-text-primary" to='/'>Farmer</Link>
                         </h1>
-                        <h1 className="subtitle" style={{ textTransform: 'capitalize' }}>{user.name}</h1>
+                        <h1 className="subtitle text-dark" style={{ textTransform: 'capitalize' }}>{user.name}</h1>
 
                         <div>
                             <button onClick={() => this.props.logout()} className="button is-link" >Logout</button>
@@ -93,7 +97,6 @@ class Dashboard extends React.Component {
 
                         <br />
 
-                        <Demo />
                         <form onSubmit={this.handleSubmit}>
                             <div className="field">
                                 <div className="file has-name is-boxed is-fullwidth" style={{ marginTop: '4rem' }}>
@@ -103,7 +106,7 @@ class Dashboard extends React.Component {
                                             <span className="file-icon">
                                                 <i className="fas fa-upload"></i>
                                             </span>
-                                            <span className="file-label">
+                                            <span className="file-label has-text-centered">
                                                 {!this.state.filename && (
                                                     <>
                                                         Upload a Picture
@@ -126,6 +129,8 @@ class Dashboard extends React.Component {
                                 <button onClick={this.showLoader} className="button is-primary is-fullwidth">Submit</button>
                             </div>
                         </form>
+
+                        <Link to="/report" >See Report</Link>
 
                     </div>
                     <div className="column">
@@ -193,16 +198,15 @@ const withGeoLocation = geolocated({
 const MarkerList = ({ markers }) => {
 
 
-    if (markers) return markers.map(item => <button key={item.id + Math.floor((Math.random() * 100000) + 1)} onClick={alert("helo")}>
-        <Marker
-            label={item.disease_name}
-            icon={{
-                url: require('../img/red.png'),
-                scaledSize: { width: 62, height: 62 }
-            }}
-            position={{ lat: parseFloat(item.lat), lng: parseFloat(item.lng) }
-            } />
-    </button>)
+    if (markers) return markers.map(item => <Marker
+        label={item.disease_name}
+        key={item.id + Math.floor((Math.random() * 100000) + 1)}
+        icon={{
+            url: require('../img/red.png'),
+            scaledSize: { width: 62, height: 62 }
+        }}
+        position={{ lat: parseFloat(item.lat), lng: parseFloat(item.lng) }
+        } />)
     else return <div />
 }
 

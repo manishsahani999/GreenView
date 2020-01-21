@@ -24,3 +24,9 @@ export const plantImageConstants = {
     UPLOAD_PLANT_IMAGE: 'UPLOAD_PLANT_IMAGE',
     GETALL_PLANT_IMAGES: 'GETALL_PLANT_IMAGE',
 };
+
+
+export const suggestionsConstants = {
+    UPLOAD_PLANT_IMAGE: 'UPLOAD_PLANT_IMAGE',
+    GET_ALL_SUGGESTIONS: 'GET_ALL_SUGGESTIONS',
+};

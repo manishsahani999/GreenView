@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from api.settings import BASE_DIR
-
+import tensorflow as tf
 from custom_code import image_converter
 
 @api_view(['GET'])
@@ -45,8 +45,8 @@ def predict_plant_disease(request):
                 header, image_data = request_data.split(';base64,')
                 image_array, err_msg = image_converter.convert_image(image_data)
                 if err_msg == None :
-                    model_file = f"{BASE_DIR}/ml_files/cnn_model.pkl"
-                    saved_classifier_model = pickle.load(open(model_file,'rb'))
+                    model_file = f'{BASE_DIR}/ml_files/cnn.h5'
+                    saved_classifier_model = tf.keras.models.load_model(model_file)
                     prediction = saved_classifier_model.predict(image_array) 
                     label_binarizer = pickle.load(open(f"{BASE_DIR}/ml_files/label_transform.pkl",'rb'))
                     return_data = {
