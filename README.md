@@ -1,6 +1,8 @@
 # GreenView
 Disease Mapping – Our main objective is to help poor farmers and government to tackle the decrease in crop productivity due to diseases and pests.
 
+> Selected in Google's Build for Digital India under top 20 Ideas in North-India.
+
 ## Concept
 Agriculture plays a key role in supporting the rapidly growing population. Plant disease reduces the production along with the quality of food, fiber and biofuel crops. These losses can range from chronic to catastrophic, on an average 42% of the population of the six most important food crops Losses due to postharvest disease can be disastrous, especially when farms are a long way from markets and infrastructure and supply chain practices are poor.
 
@@ -23,6 +25,10 @@ We took our solution to some farmers and we got to learn that most of the farmer
 Our projects have three components as usual:
 1. Frontend: This is where the user interacts with our application and they can send images of plants and crops they want to know about, like disease, basic info and can see which area of their crop is more affected by the disease. The image uploaded by the user along with the location is then sent to the backend. It also shows a heat map of diseases area wise.
 2. Backend: This is where the real magic happens, the image sent by the frontend get uploaded here and we analyze the image and detect the disease and other useful information. The data is then stored and plotted on the map.
+
+<div style="text-align:center;">
+<a href="https://ibb.co/yh89Jnx"><img src="https://i.ibb.co/8zjCVDQ/REST-API.png" alt="REST-API" border="0"></a>
+</div>
 
 We used ReactJS for developing the interface, PHP/Laravel for the backend server and Tensorflow/Keras for developing the state of the art image classifier for the disease prediction. All three components will be deployed on Microsoft’s Azure resources, Machine Learning for our TensorFlow Model and other web app containers for other React and Laravel.
 
